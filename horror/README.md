@@ -1,82 +1,75 @@
-# BigDataCPH25
-Group project for big data class
-# 🎮 Clustering Horror Games Using Steam Data
+# 👾 Steam Horror Game Clustering Engine
 
-This project explores the application of Big Data collection, feature engineering, and unsupervised machine learning to discover hidden structures within horror games on the Steam platform.We extracted and enriched metadata for over 4,600 horror games, clustered them based on gameplay, tags, and market features, and visualized their relationships using PCA and t-SNE.
+> Full Big Data ML pipeline across **4,600+ Steam horror games**. Scraped two APIs + web, engineered a 459-dimension feature matrix, applied K-Means clustering with PCA and t-SNE visualization, and built a recommender system on top.
 
-## Methods Used
+**Copenhagen Business School — Big Data Course, 2025**
 
-APIs/Scraping: Steam Store API, SteamSpy API, BeautifulSoup (web scraping)
+---
 
-Feature Engineering: Tags, genres, price, reviews, playtime, release year
+## Results — Cluster Visualizations
 
-Clustering: K-Means clustering + Elbow Method
+### 10 Clusters — PCA
+![10 Cluster PCA](cluster_10_PCA.png)
 
-Dimensionality Reduction: PCA and t-SNE for 2D visualizations
+### 10 Clusters — t-SNE
+![10 Cluster t-SNE](cluster_10_t-SNE.png)
 
-Libraries Used:pandas, numpy, scikit-learn, matplotlib, BeautifulSoup4, requests
+### 20 Clusters — PCA
+![20 Cluster PCA](cluster_20_PCA.png)
 
-## 🔍 Project Structure
+### 20 Clusters — t-SNE
+![20 Cluster t-SNE](cluster_20_t-SNE.png)
 
-This project uses a combination of numerical and categorical features:
+### Elbow Method — Optimal K
+![Elbow Method](k_means_elbow%20300.png)
 
-File/Folder                         Purpose
-all_games.py                        Gets initial list of all games on steam
-filter_horror_games.py:             Filters full Steam game list to horror-only games
-tag_games.py                        Scrapes user tags and review summaries
-feature_matrix.py                   Creates a cleaned, scaled feature matrix
-K_means_clustering.py               Applies K-Means clustering to feature matrix
-clustered_games_analysis.py         Analyzes top tags, genres, numeric summaries per cluster
-horror_games.csv                    Initial list of horror games
-horror_games_enriched_full_new.csv  Full enriched dataset
-horror_games_clustered_10.csv       Final dataset with cluster labels
-visualization_cluster.py            Visualizes results with PCA and t-SNE
-recommender.py                      Uses clustering results to recommend games to user
-old_versions                        Contains archived files that became obsolete during project completion
+---
 
-## How to Run 
+## Key Findings
 
-Install dependencies:
+- **Strategy, Platformer, Abstract Horror, and Roguelike** games form distinct natural clusters
+- Playtime and review score are **positively correlated** within clusters
+- The recommender surfaces context-aware suggestions beyond simple genre matching — input a game, get back titles with shared gameplay tags, genre, and market features
 
+---
+
+## Pipeline
+
+```
+Steam Store API ──┐
+SteamSpy API ─────┼──► Feature Matrix (459 dims) ──► K-Means ──► PCA / t-SNE ──► Recommender
+BeautifulSoup ────┘         4,600+ games
+```
+
+| Step | Script | Output |
+|---|---|---|
+| Get all Steam games | `all_games.py` | `steam_apps.csv` |
+| Filter to horror | `filter_horror_games.py` | `horror_games.csv` |
+| Scrape tags & reviews | `tag_games.py` | enriched dataset |
+| Build feature matrix | `feature_matrix.py` | 459-dim matrix |
+| K-Means clustering | `K_means_clustering.py` | cluster labels |
+| Analyze clusters | `clustered_games_analysis.py` | cluster profiles |
+| Visualize | `visualization_cluster.py` | PCA + t-SNE plots |
+| Recommend | `recommender.py` | similar game suggestions |
+
+---
+
+## How to Run
+
+```bash
 pip install pandas scikit-learn beautifulsoup4 matplotlib requests
 
-Run scripts in order:
+python all_games.py
+python filter_horror_games.py
+python tag_games.py
+python feature_matrix.py
+python K_means_clustering.py
+python clustered_games_analysis.py
+python visualization_cluster.py  # optional
+python recommender.py            # optional
+```
 
-all_games.py
+---
 
-filter_horror_games.py
-
-tag_games.py
-
-feature_matrix.py
-
-K_means_clustering.py
-
-clustered_games_analysis.py
-
-Visualizations (optional but recommended):
-
-visualization_cluster.py
-
-Recommender (optional):
-
-Recommender.py
-
-## Key Insights
-
-Strategy, Platformer, Abstract Horror, and Roguelike games form distinct groups.
-Remaining mix of strategy games are easily differentiable by playtime and review score (the two are positively correlated).
-
-## Final Deliverables
-
-Cleaned dataset of 4,600+ horror games
-
-Feature matrix with 459 dimensions
-
-K-Means clustering output with 5, 10, 20, or 100 distinct groups
-
-PCA and t-SNE visualizations
-
-Analytical report of cluster profiles and game insights
-
-Recommendation program
+## Tech Stack
+`Python` `pandas` `numpy` `scikit-learn` `matplotlib` `BeautifulSoup4` `Steam Store API` `SteamSpy API`
