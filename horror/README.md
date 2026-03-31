@@ -2,8 +2,6 @@
 
 > Full Big Data ML pipeline across **4,600+ Steam horror games**. Scraped two APIs + web, engineered a 459-dimension feature matrix, applied K-Means clustering with PCA and t-SNE visualization, and built a recommender system on top.
 
-**Copenhagen Business School — Big Data Course, 2025**
-
 ---
 
 ## Results — Cluster Visualizations
